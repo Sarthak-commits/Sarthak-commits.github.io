@@ -1,2 +1,1 @@
-# Sarthak-commits.github.io
-github website
+Github.io website for introduction
