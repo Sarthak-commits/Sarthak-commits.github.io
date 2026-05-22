@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sarthak — Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f5f2ec;
+    --ink: #1a1814;
+    --ink2: #4a4740;
+    --ink3: #8a8780;
+    --rule: #d8d4cc;
+    --accent: #1a1814;
+    --serif: 'EB Garamond', Georgia, serif;
+    --mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 3rem;
+    background: rgba(245,242,236,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-id {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink2);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── SECTIONS ── */
+  section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 6rem;
+    padding-top: 6rem;
+    max-width: 860px;
+    margin: 0 auto;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    position: relative;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: appear 0.8s 0.1s forwards;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--ink3);
+  }
+
+  .hero-headline {
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 400;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: appear 0.9s 0.25s forwards;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--ink2);
+  }
+
+  .hero-subtext {
+    font-size: 1.15rem;
+    color: var(--ink2);
+    max-width: 520px;
+    line-height: 1.75;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: appear 0.9s 0.4s forwards;
+  }
+
+  .hero-meta {
+    display: flex;
+    gap: 3rem;
+    opacity: 0;
+    animation: appear 0.9s 0.55s forwards;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .meta-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+
+  .meta-value {
+    font-size: 1rem;
+    color: var(--ink);
+  }
+
+  /* scroll hint */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    writing-mode: vertical-rl;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: appear 1s 1s forwards;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 3rem;
+    background: var(--ink3);
+    animation: growLine 2s 1.5s ease-out forwards;
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+
+  @keyframes growLine { to { transform: scaleY(1); } }
+
+  /* ── DIVIDER ── */
+  .rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 3rem;
+  }
+
+  hr.rule { border-top-color: var(--rule); }
+
+  /* ── PHILOSOPHY ── */
+  .phil {
+    padding: 7rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .phil-section-id {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .phil-section-id::before {
+    content: '';
+    width: 2rem;
+    height: 1px;
+    background: var(--ink3);
+    display: inline-block;
+  }
+
+  .phil-block {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    margin-bottom: 4rem;
+    padding-bottom: 4rem;
+    border-bottom: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .phil-block.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .phil-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .phil-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding-top: 0.3rem;
+  }
+
+  .phil-text {
+    font-size: 1.45rem;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .phil-text em { font-style: italic; color: var(--ink2); }
+
+  .phil-text strong {
+    font-weight: 500;
+  }
+
+  /* ── WORK ── */
+  .work {
+    padding: 7rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .work-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 4rem;
+  }
+
+  .work-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+
+  .work-title em { font-style: italic; color: var(--ink2); }
+
+  /* featured project */
+  .project-featured {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 3rem 0;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 3rem;
+    align-items: end;
+    margin-bottom: 3rem;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .project-featured.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .project-featured:hover .proj-name { text-decoration: underline; text-underline-offset: 4px; }
+
+  .proj-badge {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .proj-badge span {
+    display: inline-block;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 0.15rem 0.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .proj-name {
+    font-size: clamp(1.6rem, 3vw, 2.5rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .proj-desc {
+    font-size: 1rem;
+    color: var(--ink2);
+    line-height: 1.7;
+    max-width: 440px;
+  }
+
+  .proj-arrow {
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--ink3);
+    text-align: right;
+    align-self: center;
+    transition: transform 0.25s;
+  }
+
+  .project-featured:hover .proj-arrow {
+    transform: translate(6px, -6px);
+    color: var(--ink);
+  }
+
+  .proj-tags {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .proj-tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    border: 1px solid var(--rule);
+    padding: 0.25rem 0.6rem;
+  }
+
+  /* forks */
+  .forks-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .forks-label::before {
+    content: '';
+    width: 1.5rem;
+    height: 1px;
+    background: var(--ink3);
+    display: inline-block;
+  }
+
+  .fork-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: all 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .fork-row.visible { opacity: 1; transform: none; }
+
+  .fork-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: background 0.2s;
+    padding-right: 2rem;
+  }
+
+  .fork-item:nth-child(even) { padding-right: 0; padding-left: 2rem; border-left: 1px solid var(--rule); }
+
+  .fork-item:hover .fork-name { text-decoration: underline; text-underline-offset: 3px; }
+
+  .fork-type {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 0.6rem;
+  }
+
+  .fork-name {
+    font-size: 1.05rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+  }
+
+  .fork-desc {
+    font-size: 0.88rem;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+
+  /* ── SKILLS ── */
+  .skills {
+    padding: 7rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    border-left: 1px solid var(--rule);
+    margin-top: 3rem;
+  }
+
+  .skill-cell {
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    padding: 2rem 1.75rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .skill-cell.visible { opacity: 1; transform: none; }
+
+  .skill-lang {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+
+  .skill-level {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 1.25rem;
+  }
+
+  .skill-bar-wrap {
+    height: 2px;
+    background: var(--rule);
+    width: 100%;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    background: var(--ink);
+    width: 0;
+    transition: width 1.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  /* ── CONNECT ── */
+  .connect {
+    padding: 7rem 3rem;
+    max-width: 860px;
+    margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+
+  .connect-big {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 3rem;
+  }
+
+  .connect-big em { font-style: italic; color: var(--ink2); }
+
+  .connect-links {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid var(--rule);
+    margin-top: 3rem;
+  }
+
+  .connect-link {
+    flex: 1;
+    padding: 2rem 0;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 1.5rem;
+    transition: background 0.2s;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .connect-link:last-child { border-right: none; }
+
+  .connect-link:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+
+  .connect-link span { padding-left: 1.5rem; }
+
+  .connect-arrow { opacity: 0.5; }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink3);
+  }
+
+  @keyframes appear {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 680px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1.5rem; }
+    .hero, section, .phil, .work, .skills, .connect { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .hero-headline { font-size: 2.8rem; }
+    .phil-block { grid-template-columns: 1fr; gap: 1rem; }
+    .project-featured { grid-template-columns: 1fr; }
+    .proj-arrow { display: none; }
+    .fork-row { grid-template-columns: 1fr; }
+    .fork-item:nth-child(even) { padding-left: 0; border-left: none; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .connect-links { flex-wrap: wrap; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-id">Sarthak · D4TT BOOST</div>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Java Developer · India</p>
+  <h1 class="hero-headline">
+    Code is<br/>
+    <em>a means,</em><br/>
+    not the end.
+  </h1>
+  <p class="hero-subtext">
+    2+ years writing Java. Learning Python. Exploring AI agents and security tooling.
+    I commit often, break things deliberately, and fix them for good.
+  </p>
+  <div class="hero-meta">
+    <div class="meta-item">
+      <span class="meta-label">Focus</span>
+      <span class="meta-value">Java & AI Tooling</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Currently</span>
+      <span class="meta-value">Learning Python 🐍</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">GitHub</span>
+      <span class="meta-value"><a href="https://github.com/Sarthak-commits" style="color:inherit;">Sarthak-commits</a></span>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</div>
+
+<!-- PHILOSOPHY -->
+<div class="phil">
+  <p class="phil-section-id">Philosophy</p>
+
+  <div class="phil-block reveal">
+    <div class="phil-label">On shipping</div>
+    <div class="phil-text">
+      A working thing in production beats a perfect thing in a branch.
+      <em>Ship, observe, improve.</em> Repeat.
+    </div>
+  </div>
+
+  <div class="phil-block reveal">
+    <div class="phil-label">On learning</div>
+    <div class="phil-text">
+      The best way to understand a codebase is to
+      <strong>read it, fork it, break it.</strong>
+      That's why I contribute to projects I admire.
+    </div>
+  </div>
+
+  <div class="phil-block reveal">
+    <div class="phil-label">On tools</div>
+    <div class="phil-text">
+      AI can write code. It still needs a human
+      <em>asking the right question.</em>
+      That's the skill worth building.
+    </div>
+  </div>
+
+  <div class="phil-block reveal">
+    <div class="phil-label">On commits</div>
+    <div class="phil-text">
+      Every commit is a decision.
+      Make it <strong>intentional.</strong>
+    </div>
+  </div>
+</div>
+
+<hr style="border:none;border-top:1px solid var(--rule);max-width:860px;margin:0 auto;"/>
+
+<!-- WORK -->
+<div class="work" id="work">
+  <div class="work-header">
+    <h2 class="work-title">What I've<br/><em>built & explored</em></h2>
+  </div>
+
+  <!-- FEATURED -->
+  <a href="https://github.com/Sarthak-commits/youtube-downloader" target="_blank" class="project-featured reveal">
+    <div>
+      <div class="proj-badge"><span>My Own Build</span> · 2024</div>
+      <div class="proj-name">youtube-downloader</div>
+      <p class="proj-desc">
+        A no-fuss tool to download YouTube videos. Built end-to-end in JavaScript.
+        My first published project — clean, useful, done.
+      </p>
+      <div class="proj-tags">
+        <span class="proj-tag">JavaScript</span>
+        <span class="proj-tag">CLI</span>
+        <span class="proj-tag">Utility</span>
+      </div>
+    </div>
+    <div class="proj-arrow">↗</div>
+  </a>
+
+  <!-- FORKS -->
+  <div class="forks-label">Open source I'm learning from</div>
+
+  <div class="fork-row reveal">
+    <a href="https://github.com/Sarthak-commits/agentignore-check" target="_blank" class="fork-item">
+      <div class="fork-type">Fork · JavaScript</div>
+      <div class="fork-name">agentignore-check</div>
+      <p class="fork-desc">Keeps AI agents away from secrets and noise in repos.</p>
+    </a>
+    <a href="https://github.com/Sarthak-commits/mcp-agent-security-kit" target="_blank" class="fork-item">
+      <div class="fork-type">Fork · Python</div>
+      <div class="fork-name">mcp-agent-security-kit</div>
+      <p class="fork-desc">Audit tools for securing MCP servers and agentic AI.</p>
+    </a>
+  </div>
+
+  <div class="fork-row reveal">
+    <a href="https://github.com/Sarthak-commits/traceroot" target="_blank" class="fork-item">
+      <div class="fork-type">Fork · TypeScript · YC S25</div>
+      <div class="fork-name">traceroot</div>
+      <p class="fork-desc">Observability & self-healing layer for AI agents.</p>
+    </a>
+    <a href="https://github.com/Sarthak-commits/GPT_API_free" target="_blank" class="fork-item">
+      <div class="fork-type">Fork · AI</div>
+      <div class="fork-name">GPT API Free</div>
+      <p class="fork-desc">Free access to GPT, Claude, DeepSeek, Gemini APIs.</p>
+    </a>
+  </div>
+
+  <div class="fork-row reveal">
+    <a href="https://github.com/Sarthak-commits/flint" target="_blank" class="fork-item">
+      <div class="fork-type">Fork · TypeScript</div>
+      <div class="fork-name">flint</div>
+      <p class="fork-desc">A fast, friendly linter for JS and TypeScript.</p>
+    </a>
+    <div class="fork-item" style="opacity:0.3;cursor:default;">
+      <div class="fork-type">More coming</div>
+      <div class="fork-name">Building in public</div>
+      <p class="fork-desc">Next project in progress...</p>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="skills" id="skills">
+  <p class="phil-section-id">Skills</p>
+  <h2 class="work-title">What I work <em>with</em></h2>
+  <div class="skills-grid">
+    <div class="skill-cell reveal">
+      <div class="skill-lang">Java</div>
+      <div class="skill-level">Primary · 2+ yrs</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="88"></div></div>
+    </div>
+    <div class="skill-cell reveal">
+      <div class="skill-lang">Python</div>
+      <div class="skill-level">Learning actively</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="42"></div></div>
+    </div>
+    <div class="skill-cell reveal">
+      <div class="skill-lang">JavaScript</div>
+      <div class="skill-level">Proficient</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="70"></div></div>
+    </div>
+    <div class="skill-cell reveal">
+      <div class="skill-lang">TypeScript</div>
+      <div class="skill-level">Familiar</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="48"></div></div>
+    </div>
+    <div class="skill-cell reveal">
+      <div class="skill-lang">AI & MCP</div>
+      <div class="skill-level">Exploring</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="50"></div></div>
+    </div>
+    <div class="skill-cell reveal">
+      <div class="skill-lang">Git & OSS</div>
+      <div class="skill-level">Daily driver</div>
+      <div class="skill-bar-wrap"><div class="skill-bar-fill" data-w="84"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONNECT -->
+<div class="connect" id="connect">
+  <p class="phil-section-id">Connect</p>
+  <h2 class="connect-big">
+    Let's build<br/>
+    <em>something real.</em>
+  </h2>
+  <p style="color:var(--ink2);max-width:480px;line-height:1.75;font-size:1.05rem;">
+    Open to collaborations, interesting problems, and conversations about Java, AI tooling,
+    and open source. Reach out on GitHub.
+  </p>
+  <div class="connect-links">
+    <a href="https://github.com/Sarthak-commits" target="_blank" class="connect-link">
+      <span>GitHub</span>
+      <span class="connect-arrow">↗</span>
+    </a>
+    <a href="https://github.com/Sarthak-commits?tab=repositories" target="_blank" class="connect-link">
+      <span>Repositories</span>
+      <span class="connect-arrow">↗</span>
+    </a>
+    <a href="https://github.com/Sarthak-commits/youtube-downloader" target="_blank" class="connect-link">
+      <span>My Project</span>
+      <span class="connect-arrow">↗</span>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>Sarthak-commits · D4TT BOOST</span>
+  <span>Every commit is a step forward</span>
+  <span>© 2025</span>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const ro = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        const siblings = Array.from(e.target.parentNode.querySelectorAll('.reveal'));
+        const idx = siblings.indexOf(e.target);
+        setTimeout(() => e.target.classList.add('visible'), idx * 80);
+        ro.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => ro.observe(el));
+
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  const bo = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => { e.target.style.width = e.target.dataset.w + '%'; }, 300);
+        bo.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(b => bo.observe(b));
+</script>
+</body>
+</html>
